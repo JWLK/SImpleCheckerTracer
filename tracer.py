@@ -18,6 +18,7 @@ def main():
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
+    qrExist=False
     pointX=0
     pointY=0
     baseLine=0
@@ -29,7 +30,13 @@ def main():
     baseSplit = 60
     
     decoded = pyzbar.decode(imgGray)
-#     print(decoded)
+    # print(decoded)
+    if len(decoded) == 0 :
+        # print('no qr-code')
+        qrExist = False
+    else :
+        qrExist = True
+
     
     for d in decoded:
 #         print(d.data.decode('utf-8'))
@@ -50,9 +57,10 @@ def main():
     cl1 = imgHSV[pointY,pointX+splitValue]
     cl2 = imgHSV[pointY,pointX+2*splitValue]
     
+    print(qrExist)
     print('[{0},{1},{2}]'.format(cl0[0],cl0[1],cl0[2]))
-    print('[{0},{1},{2}]'.format(cl1[0],cl1[1],cl2[2]))
-    print('[{0},{1},{2}]'.format(cl2[0],cl1[1],cl2[2]))
+    print('[{0},{1},{2}]'.format(cl1[0],cl1[1],cl1[2]))
+    print('[{0},{1},{2}]'.format(cl2[0],cl2[1],cl2[2]))
     
     
 if __name__ == '__main__':
